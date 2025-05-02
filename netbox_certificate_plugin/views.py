@@ -113,7 +113,9 @@ class CertificateImportView(generic.BulkImportView):
 # Certificate Authority Views
 class CertificateAuthorityListView(generic.ObjectListView):
     queryset = models.CertificateAuthority.objects.all()
+    print(f"CertificateAuthorityListView query set: {queryset}")
     table = tables.CertificateAuthorityTable
+    print(f"CertificateAuthorityListView table: {queryset}")
 
 class CertificateAuthorityView(generic.ObjectView):
     queryset = models.CertificateAuthority.objects.all()
