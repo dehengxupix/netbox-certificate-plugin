@@ -58,7 +58,7 @@ def fetch_certificate(request):
         issue_date = f"{issue_date[:4]}-{issue_date[4:6]}-{issue_date[6:8]}"
 
         # Return the extracted data as a JSON response
-        return JsonResponse({
+        resp = JsonResponse({
             'issued_to': issued_to,
             'issued_by': issued_by,
             'serial_number': serial_number,
@@ -69,13 +69,17 @@ def fetch_certificate(request):
             'san_names': san_names,
             'fingerprint': fingerprint,  # Return the fingerprint
         })
-
+        print(f"Certificate data fetched successfully: {resp}")
+        return resp
     except Exception as e:
+        print(f"Error fetching certificate: {e}")
         return JsonResponse({'error': str(e)}, status=500)
 
 class CertificateListView(generic.ObjectListView):
     queryset =models.Certificate.objects.all().order_by('expiration_date')  # Sort by expiration date
+    print(f"CertificateListView query set: {queryset}")
     table = tables.CertificateTable
+    print(f"CertificateListView table: {table}")
 
 class CertificateView(generic.ObjectView):
     queryset = models.Certificate.objects.all()   
